@@ -62,7 +62,7 @@ sns.histplot(data=df, x=df['JobRole'],
              discrete=True, hue="Attrition",
              palette=sns.color_palette("Set1",2))
 plt.show()
-sns.histplot(data=df, x=df['JobLevel'],
+sns.histplot(data=df, x=df['JobSatisfaction'],
              discrete=True, hue="Attrition",
              palette=sns.color_palette("Set1",2))
 plt.xticks(ticks=[1,2,3,4,5])
