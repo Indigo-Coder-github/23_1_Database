@@ -1,6 +1,10 @@
-import seaborn as sns
-import pandas as pd
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+import seaborn as sns
+from sklearn.metrics import matthews_corrcoef
+
+#EmployeeCount랑 EmployeeNumber ㅈ도 의미없는거 같음
 
 df = pd.read_csv('HR Employee Attrition.csv').drop(["EmployeeCount", "EmployeeNumber", "StandardHours", "Over18"], axis=1)
 
@@ -20,6 +24,12 @@ df[category_column] = df[category_column].replace({"Non-Travel":0, "Travel_Rarel
 
 ordinary_column = ["Education", "EnvironmentSatisfaction", "JobInvolvement", "JobLevel", "JobSatisfaction",
                    "RelationshipSatisfaction", "StockOptionLevel", "WorkLifeBalance"]
-
-sns.heatmap(data=df, x="PercentSalaryHike", y="PerformanceRating", hue="Attrition")
+                   
+corr_matrix = df.corr("pearson")
+sns.heatmap(corr_matrix[np.abs(corr_matrix) >= 0.25],
+            cmap="coolwarm", 
+            linewidths=0.5, linecolor="black",
+            vmin=-1.0, vmax=1.0)
+plt.xticks(ticks=np.array(range(len(corr_matrix)))+0.5,labels=corr_matrix.columns)
+plt.yticks(ticks=np.array(range(len(corr_matrix)))+0.5,labels=corr_matrix.index)
 plt.show()
